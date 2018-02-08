@@ -46,7 +46,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -706,6 +709,12 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
             });
 
 
+            seriesSUN.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesSUN: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
             seriesSUN.setThickness(10);
 
 
@@ -747,6 +756,13 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
             });
 
 
+            seriesMON.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesMON: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
+
             seriesMON.setThickness(10);
 
             seriesMON.setColor(getResources().getColor(android.R.color.darker_gray));
@@ -786,6 +802,12 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
             });
 
+            seriesTUE.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesTUE: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
 
             seriesTUE.setThickness(10);
 
@@ -827,6 +849,13 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
             });
 
 
+            seriesWED.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesWED: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
+
             seriesWED.setThickness(10);
 
             seriesWED.setColor(getResources().getColor(android.R.color.holo_red_light));
@@ -866,6 +895,12 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
             });
 
+            seriesTHUR.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesTHUR: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
 
             seriesTHUR.setThickness(10);
 
@@ -907,6 +942,13 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
             });
 
 
+            seriesFRI.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesFRI: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
+
             seriesFRI.setThickness(10);
 
             seriesFRI.setColor(getResources().getColor(android.R.color.holo_orange_light));
@@ -946,6 +988,13 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
             });
 
+
+            seriesSAT.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    Toast.makeText(getApplicationContext(), "seriesSAT: On Data Point clicked: "+dataPoint, Toast.LENGTH_SHORT).show();
+                }
+            });
 
             seriesSAT.setThickness(10);
 
