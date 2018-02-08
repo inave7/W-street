@@ -95,6 +95,8 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
     private Calendar cCal;
     private Date newDate;
     private ProgressDialog pd;
+    private Handler waitHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -488,6 +490,10 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
     private void getDirectionsJSON() {
 
+        pd = new ProgressDialog(NavigationActivity.this);
+        pd.setMessage("Please wait");
+        pd.setCancelable(false);
+        pd.show();
 
         for (Long z = EpouchTimes.get(0); z <= EpouchTimes.get(23); z += 3600) {
 
@@ -503,13 +509,9 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
         }
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                PlotGraph(DAY);
-            }
-        }, 40000);
+
+
+
 
     }
 
@@ -520,10 +522,7 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pd = new ProgressDialog(NavigationActivity.this);
-            pd.setMessage("Please wait");
-            pd.setCancelable(false);
-            pd.show();
+
         }
 
         protected String doInBackground(String... params) {
@@ -548,7 +547,7 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+            //        Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
 
@@ -605,7 +604,7 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
 
         private void ParseJson(String result) {
             //     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-            Log.d("JSONresponse", result);
+        //    Log.d("JSONresponse", result);
 
             try {
                 // Getting JSON Array
@@ -625,8 +624,27 @@ public class NavigationActivity extends AppCompatActivity implements OnMapReadyC
                     Log.d("SMACKDOWN", called + " - hour of the Day" + "\n  Time needed - " + time);
 
                     x.add(called);
-                    y.add(Integer.valueOf(time.replaceAll("[^0-9]", "")));
 
+                    if (!time.contains("hour"))
+                    y.add(Integer.valueOf(time.replaceAll("[^0-9]", "")));
+                    else {
+                        String hr = time.substring(0, 2);
+                        int timeInmins = 0;
+                        if (hr.equals("1 ")) {
+                            timeInmins = 60;
+                        }  else if (hr.equals("2 ")) {
+                            timeInmins = 120;
+                        }
+
+                        String minStr = time.substring(time.lastIndexOf("hour") + 1);
+                        timeInmins+=Integer.valueOf(minStr.replaceAll("[^0-9]", ""));
+
+                        y.add(timeInmins);
+                    }
+
+
+                    if (x.size() == 24)
+                        PlotGraph(DAY);
 
                     //eeeee
 

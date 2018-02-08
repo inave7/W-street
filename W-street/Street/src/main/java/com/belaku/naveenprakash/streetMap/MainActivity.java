@@ -78,6 +78,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnTouchListener {
 
+
+    // Naveen Prakash
+
     private static Context appContext;
     private FusedLocationProviderClient mFusedLocationClient;
     private SupportMapFragment mSupportMapFragment;
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static String mAddress;
     private String mTime, mDate;
     private AdView mAdView;
-    private EditText EdtxSearch;
+  //  private EditText EdtxSearch;
     private Button BtnGo, BtnTutorial;
     private LatLng SearchLatLng;
 
@@ -119,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private ImageButton ImgbtnDirections;
 
+    private PlaceAutocompleteFragment mPlaceAutocompleteFragment;
+    private String strSearchPlace;
 
 
     @Override
@@ -128,6 +133,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         ImgbtnDirections = (ImageButton) findViewById(R.id.img_btn_directions);
 
+        mPlaceAutocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        EditText Edtx_place = mPlaceAutocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input);
+
+    //    Edtx_place.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+        Edtx_place.setText((Html.fromHtml("<font color='#FFFFFF'> <u><b>Search a Place..</b></u></font> ")));
+
+        mPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                strSearchPlace = place.getAddress().toString();
+                Toast.makeText(getApplicationContext(), place.getAddress(), Toast.LENGTH_SHORT).show();
+
+                BtnGo.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(Status status) {
+
+                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         mRotateAnimation = new RotateAnimation(ROTATE_FROM, ROTATE_TO, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);//0, 0, 40, 0);
         mRotateAnimation.setDuration((long) 5 * 5000);
@@ -187,9 +217,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         BtnGo = (Button) findViewById(R.id.btn_go);
-        EdtxSearch = (EditText) findViewById(R.id.edtx_search);
+     //   EdtxSearch = (EditText) findViewById(R.id.edtx_search);
 
-        EdtxSearch.setHint(Html.fromHtml("<font color='#FFFFFF'>Search a Place..</font> "));
+     //   EdtxSearch.setHint(Html.fromHtml("<font color='#FFFFFF'>Search a Place..</font> "));
 
         appContext = getApplicationContext();
 
@@ -365,7 +395,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             }
 
                                             mAdView.bringToFront();
-                                            EdtxSearch.bringToFront();
+                                    //        EdtxSearch.bringToFront();
+                                            mPlaceAutocompleteFragment.getView().bringToFront();
                                             BtnGo.bringToFront();
 
                                         }
@@ -464,9 +495,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         @Override
                                         public void onClick(View view) {
 
-                                            EdtxSearch.setTextColor(getResources().getColor(R.color.white));
-                                            if (EdtxSearch.getText() != null) {
-                                                SearchLatLng = getLatLngOfLocation(getApplicationContext(), EdtxSearch.getText().toString());
+                                       //     EdtxSearch.setTextColor(getResources().getColor(R.color.white));
+                                            if (strSearchPlace != null) {
+                                                SearchLatLng = getLatLngOfLocation(getApplicationContext(), strSearchPlace.toString());
 
                                                 mStreetViewPanorama.setPosition(SearchLatLng, 5000);
 
@@ -477,7 +508,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                     mSupportStreetViewPanoramaFragment.getView().bringToFront();
                                                     mSupportStreetViewPanoramaFragment.getView().setLayoutParams(params);
 
-                                                    EdtxSearch.bringToFront();
+                                             //       EdtxSearch.bringToFront();
+
                                                 }
 
                                             }
@@ -505,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                             }, streetDelay);
 
+                                            mPlaceAutocompleteFragment.getView().bringToFront();
 
                                         }
                                     });

@@ -91,7 +91,7 @@
         android:visibility="invisible" />
 
 
-    <EditText
+    <!--<EditText
         android:id="@+id/edtx_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,8 +100,15 @@
         android:hint="Search a Place"
         android:textColor="@android:color/black"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_go"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btn_go"
